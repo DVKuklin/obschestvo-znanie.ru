@@ -1,4 +1,6 @@
-export const baseUrl = 'http://api.obschestvo-znanie.ru';//'http://127.0.0.1:8000';
+// export const baseUrl = 'http://api.obschestvo-znanie.ru';
+export const baseUrl = 'http://api.obschestvo-znanie.dvkuklin.ru';
+// export const baseUrl = 'http://127.0.0.1:8000';
 export const baseUrlApi = baseUrl + '/api';
 export const baseUrlStorage = baseUrl + 'storage/';
 export const token_key = 'token';
