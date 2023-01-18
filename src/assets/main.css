@@ -36,6 +36,8 @@ html, #app{
 }
 }
 
-    .conForThem p {
-        margin: 0;
-    }
+.conForThem {
+	font-family: 'Arial';
+	font-size: 15px;
+	margin: 5px 0;
+}
