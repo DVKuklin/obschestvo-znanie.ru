@@ -46,7 +46,7 @@
             axios
                 .post(baseUrl+'/api/get_paragraps_by_section_and_theme_url',data)
                 .then(response => { 
-                    console.log(response.data.status+"sdfsdfsdf");
+                    
                     if (response.data.status == 'notAuth' || response.data.status == 'notAuth') {
                         this.status='notAuth';
                     } else if (response.data.status == 'success') {
