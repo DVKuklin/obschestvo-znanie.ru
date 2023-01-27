@@ -51,7 +51,7 @@
             axios
                 .get(baseUrl+'/api/get_user_name')
                 .then(response => { 
-                    console.log(response);
+                    // console.log(response);
                     this.userName = response.data;
                     this.isLogin = true;
                 })
@@ -81,12 +81,15 @@
                 })
                     .then(response => {
                         if (response.data.status=="success") {
-                            console.log("success");
-                            console.log(response.data.token);
+                            // console.log("success");
+                            // console.log(response.data.token);
                             localStorage.setItem('token',response.data.token);
                             alert('Вы успешно авторизованы');
                             this.isLogin = true;
                             this.userName = response.data.user_name;
+
+                            //Пока не знаю как показать меню избранное поэтому перезагружаю страницу
+                            location.reload();
                         } else {
                             alert(response.data.message);
                         }
@@ -102,9 +105,12 @@
                 axios
                     .get(baseUrl+'/api/logout')
                     .then(response => { 
-                        console.log(response);
+                        // console.log(response);
                         this.userName = "Гость";
                         this.isLogin = false;
+
+                        //Пока не знаю как убрать меню избранное поэтому перезагружаю страницу
+                        location.reload();
                     })
                     .catch(error => {
                         console.log('Что то не так. Ошибка: ' + error)
