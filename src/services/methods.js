@@ -7,6 +7,19 @@ const $api = axios.create({
     baseURL: baseUrlApi
 });
 
+export const changeBloquoteToSummary = function() {
+    let els=document.querySelectorAll('#conForContent blockquote');
+    for (let i=0;i<els.length;i++) {
+        let ps = els[i].querySelectorAll('p');
+        let sTemp = '<details>'+'<summary>'+ps[0].innerHTML+'</summary>';
+        for (let j = 1; j<ps.length; j++) {
+            sTemp = sTemp+ps[j].outerHTML;
+        }
+        sTemp = sTemp+'</details>';
+        els[i].outerHTML = sTemp;
+    }
+}
+
 export const getSections = async function() {
     return $api.get(api.sections.get);
 }

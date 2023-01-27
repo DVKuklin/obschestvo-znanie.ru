@@ -20,7 +20,7 @@ html, #app{
 
 @media screen and (max-width: 600px) {
 	html {
-		font-size: 16px;
+		font-size: 14px;
 	}
 }
 
@@ -38,6 +38,15 @@ html, #app{
 
 .conForThem {
 	font-family: 'Arial';
-	font-size: 15px;
+	font-size: 0.91rem;
 	margin: 5px 0;
+}
+
+.conForThem p, .content-container p {
+	margin:0;
+}
+
+.conForThem blockquote, details {
+	margin: 0 0;
+	color:darkgrey;
 }

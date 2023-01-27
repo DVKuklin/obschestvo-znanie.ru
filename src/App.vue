@@ -72,7 +72,7 @@ export default {
 }
 
 #conForContent {
-    padding:10px;
+    /* padding:10px; */
 }
 
 main {

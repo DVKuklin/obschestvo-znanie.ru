@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Test from '../views/Test.vue'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Contacts from '../views/Contacts.vue'
@@ -8,14 +9,16 @@ import Theme from '../views/Theme.vue'
 import NotFound from '../views/NotFound.vue'
 import { getSections, getThemesAndSectionBySectionUrl } from '../services/methods.js';
 
-
-let isRoutesLoad = false;
-
 let routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/favorites',
+    name: 'Favorites',
+    component: () => import('../views/Favorites.vue')
   },
   {
     path: '/about/',

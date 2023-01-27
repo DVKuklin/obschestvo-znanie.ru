@@ -87,8 +87,8 @@
 	display:flex;
     justify-content: center;
     align-items: center;
-	width:200px;
-	height:200px;
+	width:12.5rem;
+	height:12.5rem;
 	background-color:white;
 	box-shadow:5px 5px 10px rgba(122,122,122,0.5);
 	margin:10px;
@@ -106,6 +106,10 @@
 
 .icRazd .insideCell {
     text-align: center;
+}
+
+.icRazd .insideCell img{
+    width: 4.125rem;
 }
 
 .icRazd a {

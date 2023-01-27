@@ -16,13 +16,44 @@
             <li style="background-image: none">
                 <RouterLink to="/avt/" title="Авторизация">Авторизация</RouterLink>
             </li>
+            <li v-if="isAuthenticated" style="background-image: none">
+                <RouterLink to="/favorites/" title="Авторизация">Избранное</RouterLink>
+            </li>
         </ul>
     </nav>
 </template>
 
 <script>
+import axios from 'axios';
+import {baseUrl} from '../../../services/config.js';
+
 export default {
     name: 'TopNav',
+    data() {
+        return {
+            isAuthenticated: false
+        }
+    },
+    created() {
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
+
+        axios
+            .get(baseUrl+'/api/is_authenticated')
+            .then(response => { 
+                if (response.data.status=='success') {
+                    this.isAuthenticated = true;
+                    // console.log(isAuthenticated);
+                }
+                // console.log(response.data);
+            })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    console.log('notAuth')
+                }
+                // console.log(error.response);
+            });
+
+    },
     methods: {
         buttonMenuClick() {
             let tN = document.querySelector('header .topNav');
@@ -73,7 +104,7 @@ export default {
 
     .topNav li {
 
-        font-size:1rem;
+        font-size:1.2rem;
 
     }
 
@@ -103,7 +134,7 @@ export default {
 
     @media screen and (max-width: 771px) {
     .desctopMenu {
-        margin-bottom: 10px;
+        /* margin-bottom: 10px; */
     }
 }
     @media screen and (max-width: 500px) {
@@ -129,7 +160,8 @@ export default {
                 height: 0px;
             }
             to{
-                height: 4rem;
+                height: 8rem;
+                /* height: auto; */
             }
         }
         .topNav-close {
@@ -140,7 +172,8 @@ export default {
 
         @keyframes menu-close{
             from{
-                height: 4rem;
+                height: 8rem;
+                /* height: auto; */
             }
             to{
                 height: 0px;
@@ -152,6 +185,8 @@ export default {
             margin: 4px 0;
         }
         .button-menu {
+            position: absolute;
+            right: 10px;
             display: block;
             text-align: right;
         }
