@@ -24,34 +24,16 @@
 </template>
 
 <script>
-import axios from 'axios';
-import {baseUrl} from '../../../services/config.js';
 
 export default {
     name: 'TopNav',
     data() {
         return {
-            isAuthenticated: false
+            // isAuthenticated: false
         }
     },
+    props: ['isAuthenticated'],
     created() {
-        axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
-
-        axios
-            .get(baseUrl+'/api/is_authenticated')
-            .then(response => { 
-                if (response.data.status=='success') {
-                    this.isAuthenticated = true;
-                    // console.log(isAuthenticated);
-                }
-                // console.log(response.data);
-            })
-            .catch(error => {
-                if (error.response.status === 401) {
-                    console.log('notAuth')
-                }
-                // console.log(error.response);
-            });
 
     },
     methods: {

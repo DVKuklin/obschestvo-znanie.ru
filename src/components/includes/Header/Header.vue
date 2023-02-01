@@ -2,8 +2,7 @@
 	<header>
 
 		<TopLogo></TopLogo>
-		<TopNav></TopNav>
-
+		<TopNav v-bind:isAuthenticated="isAuthenticated"></TopNav>
 	</header>
 </template>
 
@@ -14,10 +13,19 @@ import TopLogo from './TopLogo.vue';
 
 export default {
     name: "Header",
+	props: [
+		'isAuthenticated'
+	],
     components: {
         TopNav,
 		TopLogo
     },
+	methods: {
+
+	},
+	created() {
+
+	}
 }
 </script>
 
