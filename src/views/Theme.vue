@@ -4,17 +4,10 @@
         <h3 align="center">{{theme}}</h3>
         <div v-for="(item, i) in paragraphs" :key="i"  class="paragraph">
             <div class="content" v-html="item.content"></div>
-            <img src="/myfiles/plus.png" 
-                 v-if="!item.isInFavorites" 
-                 class="btn-favorite"
-                 @click="setParagraphToFavorites(item.id,i)"
-                 title="Добавить в избранное">
-            <img src="/myfiles/minus.png" 
-                 v-if="item.isInFavorites" 
-                 class="btn-favorite"
-                 @click="setParagraphToFavorites(item.id,i)"
-                 title="Удалить из избранного">
-            <img src="/myfiles/favorite.png" v-if="item.isInFavorites" class="favorite">
+            <img src="/myfiles/favorite.png" v-if="item.isInFavorites" class="favorite"
+            @click="setParagraphToFavorites(item.id,i)">
+            <img src="/myfiles/not_favorite.png" v-if="!item.isInFavorites" class="favorite"
+            @click="setParagraphToFavorites(item.id,i)">
         </div>
     </div>
 
@@ -93,7 +86,7 @@
                         if (response.data.status == 'success') {
                             this.paragraphs[i].isInFavorites = false;
                         }
-                        console.log(response.data.status);
+                        // console.log(response.data.status);
                     })
                     .catch(error => {
                         if (error.response.status === 401) {
@@ -158,15 +151,7 @@
         bottom: -5px;
         right: 5px;
         width:1rem;
-    }
-
-    .btn-favorite {
-        cursor: pointer;
-        position:absolute;
-        top: -1rem;
-        left: -0.5rem;
-        width:0.8rem;
-        background-color: white;  
+        cursor:pointer;
     }
 
 </style>

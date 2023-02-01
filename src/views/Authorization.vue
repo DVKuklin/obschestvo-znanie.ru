@@ -27,7 +27,6 @@
                 <button @click="login">Авторизоваться</button>
             </div>
         </div>
-        
     </center>
 
 </template>
@@ -88,8 +87,12 @@
                             this.isLogin = true;
                             this.userName = response.data.user_name;
 
-                            //Пока не знаю как показать меню избранное поэтому перезагружаю страницу
-                            location.reload();
+                            //Показываем в меню пункт Избранное
+                            this.$emit('authenticate');
+
+                            //Обнуляем поля ввода
+                            authName.value='';
+                            authPass.value='';
                         } else {
                             alert(response.data.message);
                         }
@@ -109,8 +112,8 @@
                         this.userName = "Гость";
                         this.isLogin = false;
 
-                        //Пока не знаю как убрать меню избранное поэтому перезагружаю страницу
-                        location.reload();
+                        //Убираем из меню пункт Избранное
+                        this.$emit('notAuthenticate');
                     })
                     .catch(error => {
                         console.log('Что то не так. Ошибка: ' + error)
