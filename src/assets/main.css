@@ -50,3 +50,7 @@ html, #app{
 	margin: 0 0;
 	color:darkgrey;
 }
+
+.conForThem figure.image_resized img {
+	width:100%;
+}
