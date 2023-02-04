@@ -13,6 +13,7 @@
         <PaginateButtons   v-bind:links="links" v-on:goToNewPage="getData($event)">
         </PaginateButtons>
     </div>
+    <div v-if="noData">В избранном пока ничего нет</div>
     <div v-for="(item, i) in favorites" :key="i" class="item-and-paragraph-container">
         <div class="item-container">
             <div class="item-inner-container">
@@ -56,12 +57,13 @@
             return {
                 favorites: [],
                 links: [],
+                noData: false
             }
         },
         created() {
 
 
-            let url = baseUrl+'/api/get_data_for_favorites_order_by_section_theme_asc';
+            let url = baseUrl+'/api/get_data_for_favorites_order_by_date_time_desc';
 
             if (localStorage.getItem('favorites_pagination_url')) {
                 url = localStorage.getItem('favorites_pagination_url')
@@ -71,7 +73,7 @@
         },
         methods: {
             getData(url) {
-
+                localStorage.setItem('favorites_pagination_url',url);
                 if (url==null) return;
                 axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
 
@@ -79,7 +81,7 @@
                 .post(url)
                 .then(response => { 
                     if (response.data.status=='success') {
-                        
+                        // console.log(url);    
                         let favorites = response.data.favorites.data;
 
                         for (let i=0;i<favorites.length;i++) {
@@ -91,8 +93,15 @@
                         this.links[0].label = "<";
                         this.links[this.links.length-1].label = ">"; 
 
-                        localStorage.setItem('favorites_pagination_url',url)
+                        
+
+                    } else {
+                        this.noData = true;
+                        this.favorites = [];
+                        this.links = [];
                     }
+
+                    console.log(response.data);
                 })
                 .catch(error => {
                     if (error.response.status === 401) {
@@ -100,6 +109,7 @@
                         this.$router.replace('/');
                     }
                     console.log(error.response);
+                    
                 });
             },
 
