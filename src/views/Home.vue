@@ -121,10 +121,8 @@
 	color:black;
 }
 
-/* @media screen and (max-width: 915px) {
-    .section-header {
-        margin-top: 0px;
-    }
-} */
+.icons-container a {
+    text-decoration:none;
+}
 </style>
 

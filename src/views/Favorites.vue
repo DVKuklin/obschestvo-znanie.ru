@@ -36,7 +36,7 @@
                 <img src="/myfiles/minus.png" @click="deleteParagraphFromFavorites(item.id)" title="Удалить из избранного">
                 <img src="/myfiles/maximize.png" @click="maximizeParagraph(item.id)" :id="'maximize_'+item.id" title="Развернуть" class="button-maximize">
             </div>
-            <div class="content-container" :id="'paragraph_'+item.id">
+            <div class="content-container conForThem" :id="'paragraph_'+item.id">
                 <div v-html="item.content"></div>
             </div>
         </div>
@@ -64,7 +64,7 @@
 
 
             let url = baseUrl+'/api/get_data_for_favorites_order_by_date_time_desc';
-
+            
             if (localStorage.getItem('favorites_pagination_url')) {
                 url = localStorage.getItem('favorites_pagination_url')
             }
@@ -73,8 +73,8 @@
         },
         methods: {
             getData(url) {
-                localStorage.setItem('favorites_pagination_url',url);
                 if (url==null) return;
+                localStorage.setItem('favorites_pagination_url',url);
                 axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
 
                 axios
@@ -101,7 +101,7 @@
                         this.links = [];
                     }
 
-                    console.log(response.data);
+                    // console.log(response.data);
                 })
                 .catch(error => {
                     if (error.response.status === 401) {
@@ -121,7 +121,11 @@
             },
 
             deleteParagraphFromFavorites(id) {
-                if (!confirm('Подтвердите удалене параграфа из избранного.')) return;
+                //Если мобильное, то подтвердить удаление
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+                    if (!confirm('Подтвердите удалене параграфа из избранного.')) return;
+                } 
+                
                 axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
 
                 let data = {
@@ -166,6 +170,11 @@
         updated() {
             //Замена bockquote на details
             changeBloquoteToSummary();
+            //Разворачиваем details
+            let details = document.querySelectorAll('.conForThem .summary_before');
+            for (let i=0;i<details.length;i++) {
+                showSummary(details[i]);
+            }
 
             //Добавляем кнопку развернуть/свернуть, если ширина контента большая
             let buttons = document.querySelectorAll('.button-maximize');
@@ -174,15 +183,21 @@
             }
             let content_containers = document.getElementsByClassName('content-container');
             
+            let rem = window.getComputedStyle(document.body).getPropertyValue('font-size').match(/\d+/)[0];
             for (let i = 0;i<content_containers.length;i++){
 
-                if (content_containers[i].scrollHeight <= content_containers[i].offsetHeight) {
+                if (content_containers[i].scrollHeight <= 4*rem+34) {
                     let m=content_containers[i].id.split('_');
                     let button = document.getElementById('maximize_'+m[1]);
                     button.style.display="none";
                 }
             }
 
+            //Обратно сворачиваем details
+            for (let i=0;i<details.length;i++) {
+                showSummary(details[i]);
+            }
+            
             //Устанавливаем sortSelect
             if (localStorage.getItem('sortSelectIndex')) {
                 select_sort_by.options.selectedIndex = localStorage.getItem('sortSelectIndex');
