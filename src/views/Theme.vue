@@ -62,7 +62,7 @@
                     } else if (response.data.status == 'notFound') {
                         this.status='notFound';
                     }
-                    console.log(response.data);
+                    // console.log(response.data);
                 })
                 .catch(error => {
                     if (error.response.status === 401) {
@@ -110,9 +110,6 @@
                         console.log(error.response);
                     });
                 }
-
-
-
             }
         },
         mounted() {
@@ -153,6 +150,8 @@
         width:1rem;
         cursor:pointer;
     }
+
+
 
 </style>
 

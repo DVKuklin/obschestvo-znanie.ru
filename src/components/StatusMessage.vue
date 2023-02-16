@@ -1,11 +1,11 @@
 <template>
-    <div v-if="status == 'notAuth'" class = "mesage">
+    <div v-if="status == 'notAuth'" class = "message">
         Для Вас контент данной страницы недоступен. Если Вы не авторизованы, пожалуйста авторизутесь на <RouterLink to="/avt/">странице авторизации.</RouterLink>
     </div>
-    <div v-if="status == 'notAllowed'" class = "mesage">
+    <div v-if="status == 'notAllowed'" class = "message">
         Для Вас контент данной страницы недоступен.
     </div>
-    <div v-if="status == 'notFound'" class = "mesage">
+    <div v-if="status == 'notFound'" class = "message">
         Страница не найдена.
     </div>
 </template>
@@ -18,15 +18,15 @@
 </script>
 
 <style scoped>
-    .mesage a {
+    .message a {
         color:rgb(163,239,239);
     }
 
-    .mesage a:visited {
+    .message a:visited {
         color:rgb(163,239,239);
     }
 
-    .mesage {
+    .message {
         max-width:400px;
         margin-left:auto;
         margin-right:auto;
