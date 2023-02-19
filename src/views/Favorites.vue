@@ -47,7 +47,7 @@
     import { baseUrlImages } from '../services/config.js';
     import axios from 'axios';
     import {baseUrl} from '../services/config.js';
-    import {changeBloquoteToSummary} from '../services/methods.js';
+    import {changeBloquoteToSummary, alignMarker} from '../services/methods.js';
     import PaginateButtons from '../components/PaginateButtons/PaginateButtons.vue';
 
     export default {
@@ -168,6 +168,9 @@
 
         },
         updated() {
+            //Выравниваем маркеры
+            alignMarker();
+
             //Замена bockquote на details
             changeBloquoteToSummary();
             //Разворачиваем details
@@ -202,6 +205,7 @@
             if (localStorage.getItem('sortSelectIndex')) {
                 select_sort_by.options.selectedIndex = localStorage.getItem('sortSelectIndex');
             }
+
 
         }
 

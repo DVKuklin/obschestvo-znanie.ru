@@ -1,7 +1,7 @@
 <template>
     <div v-if="status == 'loading'"><span>Загрузка данных</span></div>
     <div v-if="status == 'success'" class="conForThem">
-        <h3 align="center">{{theme}}</h3>
+        <h1 align="center" class="header_1">{{theme}}</h1>
         <div v-for="(item, i) in paragraphs" :key="i"  class="paragraph">
             <div class="content" v-html="item.content"></div>
             <img src="/myfiles/favorite.png" v-if="item.isInFavorites" class="favorite"
@@ -21,7 +21,7 @@
     import StatusMessage from '../components/StatusMessage.vue';
     import axios from 'axios';
     import {baseUrl} from '../services/config.js';
-    import {changeBloquoteToSummary} from '../services/methods.js';
+    import {changeBloquoteToSummary, alignMarker} from '../services/methods.js';
 
 
     import { getParagraphsAndThemeByUrl } from '../services/methods.js';
@@ -116,8 +116,11 @@
 
         },
         updated() {
+            //Выравниваем маркеры
+            alignMarker();
             //Замена bockquote на details
             changeBloquoteToSummary();
+
 
         }
 
@@ -126,7 +129,12 @@
 </script>
 
 <style scoped>
-    .conForThem {
+.header_1 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.4rem;
+}
+
+.conForThem {
         background-color: white;
         color: black;
         padding: 10px;

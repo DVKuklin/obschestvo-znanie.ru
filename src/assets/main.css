@@ -28,29 +28,16 @@ html, #app{
 	html {
 		font-size: 12px;
 	}
+}
 
 @media screen and (max-width: 278px) {
 	html {
 		font-size: 8px;
 	}
 }
-}
 
-.conForThem {
-	font-family: 'Arial';
-	font-size: 0.91rem;
-	margin: 5px 0;
-}
 
-.conForThem p, .content-container p {
-	margin:0;
-}
 
-.conForThem blockquote, details {
-	margin: 0 0;
-	color:darkgrey;
-}
 
-.conForThem figure.image_resized img {
-	width:100%;
-}
+
+
