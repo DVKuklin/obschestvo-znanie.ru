@@ -20,6 +20,29 @@ export const changeBloquoteToSummary = function() {
     }
 }
 
+export const alignMarker = function() {
+    let with_markers = document.querySelectorAll('.with_marker');
+
+    let rem = window.getComputedStyle(document.body).getPropertyValue('font-size').match(/\d+/)[0];
+
+    for (let i=0;i<with_markers.length;i++) {
+        let el = document.createElement('span');
+        el.innerHTML = 'sdf';
+        with_markers[i].prepend(el);
+        let parent_pos = with_markers[i].getBoundingClientRect();
+        let el_pos = el.getBoundingClientRect();
+        let el_relative_top = el_pos.top - parent_pos.top;  
+
+        let marker = with_markers[i].querySelector('.marker');
+        if (marker) {
+            console.log(marker.offsetHeight);
+            marker.style.top = el_relative_top + 0.5*rem - marker.offsetHeight/2 + 'px';
+        }
+
+        el.remove();
+    }
+}
+
 export const getSections = async function() {
     return $api.get(api.sections.get);
 }
