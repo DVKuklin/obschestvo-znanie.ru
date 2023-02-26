@@ -35,7 +35,6 @@ export const alignMarker = function() {
 
         let marker = with_markers[i].querySelector('.marker');
         if (marker) {
-            console.log(marker.offsetHeight);
             marker.style.top = el_relative_top + 0.5*rem - marker.offsetHeight/2 + 'px';
         }
 
