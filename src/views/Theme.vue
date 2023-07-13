@@ -9,7 +9,7 @@
     <div v-if="status == 'success'" class="conForThem">
 
         <h1 align="center" class="header_1">{{theme}}</h1>
-        <div v-for="(item, i) in paragraphs" :key="i"  class="paragraph">
+        <div v-for="(item, i) in paragraphs" :key="i"  class="paragraph" :id = "'paragraph_'+item.id">
             <div class="content" v-html="item.content"></div>
             <img src="/myfiles/favorite.png" v-if="item.isInFavorites" class="favorite"
             @click="setParagraphToFavorites(item.id,i)">
@@ -67,7 +67,7 @@
                         this.status='success';
                         if (response.data.image) this.image=baseUrlImages+response.data.image;
                         if (response.data.emoji) this.emoji=baseUrlImages+response.data.emoji;
-                        // console.log(response.data);
+                        console.log(response.data);
 
                     } else if (response.data.status == 'notAllowed') {
                         this.status='notAllowed';
@@ -124,14 +124,24 @@
                 }
             }
         },
-        mounted() {
 
-        },
         updated() {
             //Выравниваем маркеры
             alignMarker();
             //Замена bockquote на details
-            changeBloquoteToSummary();        }
+            changeBloquoteToSummary();     
+
+            //Если перешли из избранного, то прокручиваем до элемента
+            let id = localStorage.getItem('scrollTo');
+
+            if (id) {
+                localStorage.removeItem('scrollTo');
+                let el = document.getElementById('paragraph_'+id);
+                if (el) {
+                    el.scrollIntoView({'behavior':'smooth'});
+                }
+            }  
+        }
 
     }
 

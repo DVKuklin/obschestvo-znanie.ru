@@ -11,7 +11,7 @@ export const changeBloquoteToSummary = function() {
     let els=document.querySelectorAll('#conForContent blockquote');
     for (let i=0;i<els.length;i++) {
         let ps = els[i].children;
-        let sTemp = '<div class="details" style="position:relative;">'+'<div class="summary">'+ps[0].innerHTML+'</div><div class="summary_before" onclick="showSummary(this)"><img src="https://api-obschestvo-znanie.dvkuklin.ru/uploads/markers/icon-arrow-button-right.png"></div><div class="hidden" style="display:none;">';
+        let sTemp = '<div class="details" style="position:relative;">'+'<div class="summary">'+ps[0].innerHTML+'</div><div class="summary_before" onclick="showSummary(this)"><img src="https://api.obschestvo-znanie.ru/uploads/markers/icon-arrow-button-right.png"></div><div class="hidden" style="display:none;">';
         for (let j = 1; j<ps.length; j++) {
             sTemp = sTemp+ps[j].outerHTML;
         }

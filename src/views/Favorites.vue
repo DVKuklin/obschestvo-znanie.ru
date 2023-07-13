@@ -17,14 +17,16 @@
     <div v-for="(item, i) in favorites" :key="i" class="item-and-paragraph-container">
         <div class="item-container">
             <div class="item-inner-container">
-                <div class="icon-container">
-                    <div class="icon" :title="item.section_name">
-                        <img v-bind:src="item.section_image">
+                <RouterLink :to="'/'+item.section_url">
+                    <div class="icon-container">
+                        <div class="icon" :title="item.section_name">
+                            <img v-bind:src="item.section_image">
+                        </div>
                     </div>
-                </div>
+                </RouterLink>
                 <div class="section-theme-name">
                     <!-- <h3 class="section-name">{{ item.section_name }}</h3> -->
-                    <div>{{ item.theme_sort }}. {{ item.theme_name }}</div>
+                    <RouterLink :to="'/' + item.section_url + '/' + item.theme_url" @click="setScroll(item.id)">{{ item.theme_sort }}. {{ item.theme_name }}</RouterLink>
                 </div>
             </div>
             <div class="date-time">
@@ -49,6 +51,7 @@
     import {baseUrl} from '../services/config.js';
     import {changeBloquoteToSummary, alignMarker} from '../services/methods.js';
     import PaginateButtons from '../components/PaginateButtons/PaginateButtons.vue';
+    import { RouterLink } from 'vue-router';
 
     export default {
         name: 'Favorites',
@@ -87,7 +90,7 @@
                         for (let i=0;i<favorites.length;i++) {
                             favorites[i].section_image = baseUrlImages+favorites[i].section_image;
                         }
-
+                        // console.log(favorites);
                         this.favorites = favorites;
                         this.links = response.data.favorites.links;
                         this.links[0].label = "<";
@@ -161,6 +164,10 @@
                     btn.style.transform = 'rotate(180deg)';
                     btn.setAttribute('title','Свернуть');
                 }
+            },
+
+            setScroll(id) {
+                localStorage.setItem('scrollTo',id)
             }
 
         },
@@ -314,5 +321,10 @@
 
 .button-maximize {
     display: none;
+}
+
+.section-theme-name a{
+    color: white;
+    text-decoration: none;
 }
 </style>

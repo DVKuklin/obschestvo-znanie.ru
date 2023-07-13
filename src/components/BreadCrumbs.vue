@@ -55,6 +55,7 @@
     }
     a {
         color:rgb(163,239,239);
+        text-decoration: none;
     }
     .breadCrumbs a:visited {
         color: rgb(163,239,239);

@@ -50,6 +50,7 @@
 
 .menuRazdela a {
 	color:rgb(163,239,239);
+	text-decoration:none;
 }
 
 
