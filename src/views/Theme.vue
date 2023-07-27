@@ -67,7 +67,6 @@
                         this.status='success';
                         if (response.data.image) this.image=baseUrlImages+response.data.image;
                         if (response.data.emoji) this.emoji=baseUrlImages+response.data.emoji;
-                        console.log(response.data);
 
                     } else if (response.data.status == 'notAllowed') {
                         this.status='notAllowed';
