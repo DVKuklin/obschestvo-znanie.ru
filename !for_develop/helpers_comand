@@ -1,0 +1,6 @@
+npm run dev
+npm run build
+sudo rm -r /var/www/obsch-front
+sudo cp -r dist /var/www/obsch-front
+sudo systemctl restart apache2
+localhost:82

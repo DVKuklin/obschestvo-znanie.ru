@@ -67,9 +67,13 @@ export default {
                 }
                 // console.log(error.response);
             });
+		
+		let css_for_paragraphs_link = document.createElement('link');
+		css_for_paragraphs_link.setAttribute('rel',"stylesheet");
+		css_for_paragraphs_link.setAttribute('href',import.meta.env.VITE_BACKEND_URL+'/css/css_for_paragraphs.css');
+		document.querySelector('head').append(css_for_paragraphs_link);
     },
 	mounted() {
-
 	},
 	watch: {
 		$route (to, from){
