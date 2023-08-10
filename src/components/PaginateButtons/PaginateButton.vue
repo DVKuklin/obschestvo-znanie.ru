@@ -1,19 +1,48 @@
 <template>
-        <button class="button"
-            v-bind:class="{ active:isActive }" 
-            @click="$emit('test')">
+    <button v-if="!page" class="button"
+        v-bind:class="{ active:isActive }">
         <b><span v-html="content"></span></b>
     </button>
+    <RouterLink v-else :to="{ name: 'Favourites', query: newQuery }">
+        <button class="button"
+            v-bind:class="{ active:isActive }">
+            <b><span v-html="content"></span></b>
+        </button>
+    </RouterLink>
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
+
 export default {
     name: 'PaginateButton',
     props: [
         'content',
-        // 'url',
-        'isActive'
-    ]
+        'page',
+        'isActive',
+        'query'
+    ],
+    data() {
+        return {
+            newQuery: {},
+        }
+    },
+    components: { RouterLink },
+    mounted() {
+        Object.assign(this.newQuery,this.query);
+        if (this.content != 1 && this.page !== null) {
+            Object.assign(this.newQuery, {page: this.page})
+        }
+    },
+    watch: {
+        query: function() {
+            this.newQuery = {};
+            Object.assign(this.newQuery,this.query);
+            if (this.content != 1 && this.page !== null && this.content != '1') {
+                Object.assign(this.newQuery, {page: this.page})
+            }
+        }
+    }
 }
 
 </script>

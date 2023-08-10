@@ -16,9 +16,9 @@ let routes = [
     component: Home
   },
   {
-    path: '/favorites',
-    name: 'Favorites',
-    component: () => import('../views/Favorites.vue')
+    path: '/favourites',
+    name: 'Favourites',
+    component: () => import('../views/Favourites.vue')
   },
   {
     path: '/about/',

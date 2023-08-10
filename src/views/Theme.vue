@@ -8,7 +8,13 @@
 
     <div v-if="status == 'success'" class="conForThem">
 
-        <h1 align="center" class="header_1">{{theme}}</h1>
+        <h1 align="center" class="header_1">
+            {{theme}}
+            <img src="/myfiles/favorite.png" v-if="theme_isFavourite" class="theme_favorite"
+            @click="setThemeToFavorites(theme_id)">
+            <img src="/myfiles/not_favorite.png" v-if="!theme_isFavourite" class="theme_favorite"
+            @click="setThemeToFavorites(theme_id)">
+        </h1>
         <div v-for="(item, i) in paragraphs" :key="i"  class="paragraph" :id = "'paragraph_'+item.id">
             <div class="content" v-html="item.content"></div>
             <img src="/myfiles/favorite.png" v-if="item.isInFavorites" class="favorite"
@@ -39,6 +45,7 @@
             return {
                 paragraphs: [],
                 theme: '',
+                theme_isFavourite: false,
                 sectionURL:'',
                 section:'',
                 image:null,
@@ -64,6 +71,8 @@
                     } else if (response.data.status == 'success') {
                         this.paragraphs = response.data.paragraphs;
                         this.theme = response.data.theme;
+                        this.theme_isFavourite = response.data.theme_isFavourite;
+                        this.theme_id = response.data.theme_id;
                         this.status='success';
                         if (response.data.image) this.image=baseUrlImages+response.data.image;
                         if (response.data.emoji) this.emoji=baseUrlImages+response.data.emoji;
@@ -73,7 +82,6 @@
                     } else if (response.data.status == 'notFound') {
                         this.status='notFound';
                     }
-                    // console.log(response.data);
                 })
                 .catch(error => {
                     if (error.response.status === 401) {
@@ -87,12 +95,13 @@
                 axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
 
                 let data = {
-                    paragraph_id: id
+                    id: id,
+                    type: 'paragraph'
                 }
 
                 if (this.paragraphs[i].isInFavorites) {
                     axios
-                    .post(baseUrl+'/api/delete_paragraph_from_favorites',data)
+                    .post(baseUrl+'/api/favourites/remove_from_favourites',data)
                     .then(response => { 
                         if (response.data.status == 'success') {
                             this.paragraphs[i].isInFavorites = false;
@@ -107,10 +116,50 @@
                     });
                 } else {
                     axios
-                    .post(baseUrl+'/api/set_paragraph_to_favorites',data)
+                    .post(baseUrl+'/api/favourites/add_to_favourites',data)
                     .then(response => { 
                         if (response.data.status == 'success') {
                             this.paragraphs[i].isInFavorites = true;
+                        }
+                        // console.log(response.data.status);
+                    })
+                    .catch(error => {
+                        if (error.response.status === 401) {
+                            this.status = 'notAuth';
+                        }
+                        console.log(error.response);
+                    });
+                }
+            },
+            setThemeToFavorites(id) {
+                axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
+
+                let data = {
+                    id: id,
+                    type: 'theme'
+                }
+
+                if (this.theme_isFavourite) {
+                    axios
+                    .post(baseUrl+'/api/favourites/remove_from_favourites',data)
+                    .then(response => { 
+                        if (response.data.status == 'success') {
+                            this.theme_isFavourite = false;
+                        }
+                        // console.log(response.data.status);
+                    })
+                    .catch(error => {
+                        if (error.response.status === 401) {
+                            this.status = 'notAuth';
+                        }
+                        console.log(error.response);
+                    });
+                } else {
+                    axios
+                    .post(baseUrl+'/api/favourites/add_to_favourites',data)
+                    .then(response => { 
+                        if (response.data.status == 'success') {
+                            this.theme_isFavourite = true;
                         }
                         // console.log(response.data.status);
                     })
@@ -151,7 +200,10 @@
         font-family: 'Open Sans', sans-serif;
         font-size: 1.4rem;
     }
-
+    .theme_favorite {
+        width:1rem;
+        cursor:pointer;
+    }
     .conForThem {
         background-color: white;
         color: black;

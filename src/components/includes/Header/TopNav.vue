@@ -17,7 +17,7 @@
                 <RouterLink to="/avt/" title="Авторизация">Авторизация</RouterLink>
             </li>
             <li v-if="isAuthenticated" style="background-image: none">
-                <RouterLink to="/favorites/" title="Авторизация">Избранное</RouterLink>
+                <RouterLink to="/favourites/" title="Авторизация">Избранное</RouterLink>
             </li>
         </ul>
     </nav>
