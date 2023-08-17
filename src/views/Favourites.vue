@@ -1,13 +1,23 @@
 <template>
     <div class="tools-panel">
-        <div class="sorting">
-            Сортировать по
-            <select @change="sortSelect()" id = "select_sort_by">
-                <option value="date_time_desc">дате по убыванию</option>
-                <option value="date_time_asc">дате по возрастанию</option>
-                <option value="section_theme_asc">разделу, теме по возрастанию</option>
-                <option value="section_theme_desc">разделу, теме по убыванию</option>
-            </select>
+        <div class="selects-container">
+            <div class="select-container select-filter-order">
+                <div class="sort-by">Сортировать по</div>
+                <CustomSelect v-model="filter_order"
+                        :placeHolder="''"
+                        :options="filter_order_options"
+                        v-on:change="sortSelect"
+                        :width="16"></CustomSelect>
+            </div>
+            <div class="select-container">
+                Показать
+                <CustomSelect v-model="filter_type"
+                        :placeHolder="''"
+                        :options="filter_type_options"
+                        v-on:change="selectTypeChange"
+                        :width="8"></CustomSelect>
+            </div>
+
         </div>
  
         <PaginateButtons v-bind:links="links" v-bind:query="query">
@@ -113,13 +123,14 @@
     import {baseUrl, baseImageURL} from '../services/config.js';
     import {changeBloquoteToSummary, alignMarker} from '../services/methods.js';
     import PaginateButtons from '../components/PaginateButtons/PaginateButtons.vue';
+    import CustomSelect from '../components/CustomSelect.vue';
     import { RouterLink } from 'vue-router';
     import ButtonDropDown from '../components/ButtonDropDown.vue';
     import CountPaginatePage from '../components/CountPaginatePage.vue';
 
     export default {
         name: 'Favorites',
-        components: {PaginateButtons, ButtonDropDown, CountPaginatePage},
+        components: {PaginateButtons, ButtonDropDown, CountPaginatePage, CustomSelect},
         data() {
             return {
                 favourites: [],
@@ -130,7 +141,8 @@
                     'page',
                     'limit',
                     'order',
-                    'orderBy'
+                    'orderBy',
+                    'type',
                 ],
                 filters: {},
                 defaultFilters: {
@@ -140,6 +152,19 @@
                     orderBy: 'date_time'
                 },
                 limit: 5,
+                filter_type: 'all',
+                filter_order: 'date_time_desc',
+                filter_order_options: [
+                    {value: 'date_time_desc', name:'дате по убыванию'},
+                    {value: 'date_time_asc',  name:'дате по возрастанию'},
+                    {value: 'section_theme_asc', name:'разделу, теме по возрастанию'},
+                    {value: 'section_theme_desc', name:'разделу, теме по убыванию'}
+                ],
+                filter_type_options: [
+                    {value: 'all', name:'все'},
+                    {value: 'paragraph',  name:'параграфы'},
+                    {value: 'theme', name:'темы'}
+                ],
             }
         },
         created() {
@@ -197,17 +222,16 @@
                     })
                 })
                 .catch(error => {
-                    // console.log(error);
-                    // if (error.response.status === 401) {
-                    //     this.status = 'notAuth';
-                    //     this.$router.replace('/');
-                    // }
-                    // console.log(error.response);
+                    console.log(error);
+                    if (error.response.status === 401) {
+                        this.status = 'notAuth';
+                        this.$router.replace('/');
+                    }
+                    console.log(error.response);
                 });
             },
 
             sortSelect(){
-                let el = document.querySelector('#select_sort_by');
                 let page = '';
                 if (this.$route.query.page) {
                     page = this.$route.query.page;
@@ -218,7 +242,7 @@
                 }
                 this.filters = {};
 
-                switch (el.value) {
+                switch (this.filter_order) {
                     case 'date_time_desc': {
                         break;
                     }
@@ -360,7 +384,7 @@
                     }
                 }
             },
-            setSortSelect() {
+            setFiterSelects() {
                 let sorting = '';
                 if (
                     (!this.filters['orderBy'] || this.filters['orderBy'] == 'date_time') &&
@@ -387,11 +411,10 @@
                     sorting = 'section_theme_asc';
                 }
 
-                let sortSelect = document.getElementById('select_sort_by');
-                for (let i=0;i<sortSelect.options.length; i++) {
-                    if (sortSelect.options[i].value == sorting) {
-                        sortSelect.options[i].setAttribute('selected','selected');
-                    }
+                this.filter_order = sorting;
+
+                if (this.filters['type']) {
+                    this.filter_type = this.filters['type'];
                 }
             },
             changePageCount(count) {
@@ -411,12 +434,23 @@
                     delete newQuery.limit;
                 }
                 this.$router.push({ name: 'Favourites', query: newQuery});
+            },
+            selectTypeChange() {
+                let newQuery = {};
+                Object.assign(newQuery, this.$route.query);
+                if (this.filter_type == "all") {
+                    delete newQuery.type;
+                } else {
+                    newQuery.type = this.filter_type;
+                }
+                this.$router.push({ name: 'Favourites', query: newQuery});
+                console.log(this.filter_type);
             }
         },
         mounted() {
             this.queryToFilters();
             this.getData();
-            this.setSortSelect();
+            this.setFiterSelects();
         },
         updated() {
             this.updateData();
@@ -425,7 +459,7 @@
             $route() {
                 this.queryToFilters();
                 this.getData();
-                this.setSortSelect();
+                this.setFiterSelects();
             }
         }
     }
@@ -433,6 +467,30 @@
 </script>
 
 <style lang="less" scoped>
+.select-container {
+    display:flex;
+    gap: 0.2rem;
+    align-items: center;
+}
+
+.select-filter-order {
+
+    text-align: left;
+    @media screen and (max-width: 350px) {
+        flex-direction: column;
+        justify-content: left;
+        .sort-by {
+            text-align: left;
+            width: 100%;
+        }
+    }
+    @media screen and (max-width: 280px) {
+        flex-direction: row;
+    }
+    @media screen and (max-width: 220px) {
+        flex-direction: column;
+    }
+}
 .item-and-paragraph-container {
     margin: 0.8rem 0;
 }
@@ -441,7 +499,7 @@
     grid-template-columns: auto  auto;
     justify-content: space-between;
     margin-top:0.8rem;
-        margin-bottom:0.5rem;
+    margin-bottom:0.5rem;
 }
 
 .item-inner-container{
@@ -535,13 +593,17 @@
 .tools-panel {
     margin: 0.8rem 0;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    .selects-container{
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 }
 
-.sorting {
-    margin: 0.4rem 0; 
-}
 /* #select_sort_by {
     background-color: rgb(134, 134, 197,0.0);
     color:white;
