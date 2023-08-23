@@ -1,4 +1,8 @@
 <template>
+    <div class="heading">
+        <img class="heading-star" src="/myfiles/star.svg">
+        <h1>Избранное</h1>
+    </div>
     <div class="tools-panel">
         <div class="selects-container">
             <div class="select-container select-filter-order">
@@ -17,7 +21,7 @@
                         v-on:change="selectTypeChange"
                         :width="8"></CustomSelect>
             </div>
-
+            <ButtonDropDown v-on:themeDropDownClick="allDropDownClick($event)" :pressed="!all_hidden"/>
         </div>
  
         <PaginateButtons v-bind:links="links" v-bind:query="query">
@@ -29,7 +33,7 @@
         <div v-if="item.type == 'paragraph'">
             <div class="item-theme-container">
                 <div class="left-button-container">
-                    <ButtonDropDown v-on:themeDropDownClick="maximizeParagraph($event)" v-bind:parameter="item.id" :button_id="'maximize_'+item.id" className="button-maximaze"/>
+                    <ButtonDropDown v-on:themeDropDownClick="maximizeParagraph($event)" v-bind:parameter="item.id" :button_id="'maximize_'+item.id" className="button-maximaze" :pressed="!item.theme_hidden"/>
                 </div>
                 <div class="main-theme-container">
                     <div class="theme-emoji-name-star-container bottom-space">
@@ -64,9 +68,9 @@
         <div v-else>
             <div class="item-theme-container">
                 <div class="left-button-container">
-                    <ButtonDropDown v-if="item.theme_image || item.theme_description" v-on:themeDropDownClick="themeDropDownClick($event)" v-bind:parameter="i"/>
+                    <ButtonDropDown v-if="item.theme_image || item.theme_description" v-on:themeDropDownClick="themeDropDownClick($event)" v-bind:parameter="i" :pressed="!item.theme_hidden"/>
                 </div>
-                <div class="main-theme-container" v-bind:class="{'theme-bg-blue': item.theme_order, 'theme-bg-azure': !item.theme_order}">
+                <div class="main-theme-container" v-bind:class="{'theme-bg-blue': !item.theme_hidden && item.theme_order, 'theme-bg-azure': !item.theme_hidden && !item.theme_order}">
                     <div class="theme-emoji-name-star-container top-space">
                         <div class="theme-emoji-name-container">
                             <RouterLink :to="'/'+item.section_url">
@@ -161,10 +165,11 @@
                     {value: 'section_theme_desc', name:'разделу, теме по убыванию'}
                 ],
                 filter_type_options: [
-                    {value: 'all', name:'все'},
+                    {value: 'all', name:'всё'},
                     {value: 'paragraph',  name:'параграфы'},
                     {value: 'theme', name:'темы'}
                 ],
+                all_hidden: true,
             }
         },
         created() {
@@ -173,7 +178,8 @@
         methods: {
             getData() {
                 axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
-                
+
+                this.favourites = [];
                 axios
                 .post(baseUrl+'/api/favourites/get_favourites',this.filters)
                 .then(response => {
@@ -206,8 +212,8 @@
 
                     let theme_order = true;
                     this.favourites.forEach((item,i,mas) => {
+                        mas[i].theme_hidden = true;
                         if (item.type == 'theme') {
-                            mas[i].theme_hidden = true;
                             if (i>1 && mas[i-1].type == 'paragraph') {
                                 theme_order = true;
                             }
@@ -444,8 +450,16 @@
                     newQuery.type = this.filter_type;
                 }
                 this.$router.push({ name: 'Favourites', query: newQuery});
-                console.log(this.filter_type);
-            }
+            },
+            allDropDownClick() {
+                this.all_hidden = !this.all_hidden;
+                this.favourites.forEach((item, i, mas) => {
+                    item.theme_hidden = this.all_hidden;
+                    if (item.type == 'paragraph') {
+                        this.maximizeParagraph(item.id);
+                    }
+                })
+            },
         },
         mounted() {
             this.queryToFilters();
@@ -460,6 +474,7 @@
                 this.queryToFilters();
                 this.getData();
                 this.setFiterSelects();
+                this.all_hidden = true;
             }
         }
     }
@@ -467,6 +482,19 @@
 </script>
 
 <style lang="less" scoped>
+.heading {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-top: 0.5rem;
+    .heading-star {
+        height: 1.5rem;
+    }
+    h1 {
+        font-size: 1.5rem;
+        margin:0;
+    }
+}
 .select-container {
     display:flex;
     gap: 0.2rem;
@@ -525,7 +553,6 @@
     padding-top: 0.1rem;
 }
 
-
 .date-time {
     font-size:0.7rem;
     display:flex;
@@ -567,8 +594,8 @@
     align-items: center;
 }
 .icon {
-    width:1.6rem;
-    height:1.6rem;
+    width:1.8rem;
+    height:1.8rem;
     background-color: white;
     display:flex;
     justify-content: center;
@@ -584,7 +611,21 @@
 .paragraph-container{
     position:relative;
 }
+.content-container::-webkit-scrollbar {
+  width: 0.4rem;
+  background-color: #f9f9fd;
+}
 
+.content-container::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background-color: #7d8088;
+}
+
+.content-container::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+//   border-radius: 10px;
+  background-color: #ffffff;
+}
 .btn-panel img {
     width:0.9rem;
     margin:0.1rem;
@@ -622,6 +663,7 @@
 
 .theme-emoji {
     width: 1.8rem;
+    height: 1.8rem;
 }
 .emoji-link {
     height: 1.8rem;
@@ -654,7 +696,6 @@
                 display:flex;
                 .icon-container {
                     margin-right: 0.2rem;
-                    transform: translateY(2px);
                 }
                 .theme-name {
                     padding-left: 0.2rem;
@@ -672,9 +713,10 @@
             width: 100%;
             .theme-image {
                 width: 10rem;
+                height: 5.7rem;
             }
             .theme-description {
-                border-top: 1px #A298ED solid;
+                border-top: 2px #A298ED solid;
                 padding-left: 0.4rem;
                 width: 100%;
             }

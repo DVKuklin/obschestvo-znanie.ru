@@ -13,11 +13,12 @@ export default {
     props: [
         'parameter',
         'button_id',
-        'className'
+        'className',
+        'pressed',
     ],
     data() {
         return {
-            isPressed: false,
+            isPressed: this.pressed && false,
             aditionClass: '',
         }
     },
@@ -27,7 +28,6 @@ export default {
         } else {
             this.aditionClass = this.className;
         }
-        
     },
     methods: {
         handleClick() {
@@ -38,6 +38,11 @@ export default {
             }
             this.$emit('themeDropDownClick',this.parameter)
         },
+    },
+    watch: {
+        pressed: function() {
+            this.isPressed = this.pressed;
+        }
     },
 }
 

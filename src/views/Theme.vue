@@ -1,7 +1,7 @@
 <template>
     <div v-if="status == 'loading'"><span>Загрузка данных</span></div>
 
-    <div class="img-heading">
+    <div class="img-heading" v-if="image">
         <img class="main-img" :src="image" v-if="image">
         <img class="emoji-img" :src="emoji" v-if="emoji">
     </div>
