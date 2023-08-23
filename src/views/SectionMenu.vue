@@ -40,7 +40,7 @@
 							&& item.theme_order" 
 						class="theme-image-description-container"
 						v-bind:class="{'theme-description-bg-blue': item.theme_order, 'theme-description-bg-azure': !item.theme_order}">
-					<img v-bind:src="baseImageURL + item.image" class="theme-image">
+					<img v-bind:src="baseImageURL + item.image" class="theme-image theme-image-left">
 					<div class="theme-description">
 						{{ item.description }}
 					</div>
@@ -50,10 +50,11 @@
 							&& !item.theme_order" 
 						class="theme-image-description-container"
 						v-bind:class="{'theme-description-bg-blue': item.theme_order, 'theme-description-bg-azure': !item.theme_order}">
+					<img v-bind:src="baseImageURL + item.image" class="theme-image theme-image-right">
 					<div class="theme-description">
 						{{ item.description }}
 					</div>
-					<img v-bind:src="baseImageURL + item.image" class="theme-image">
+
 				</div>
 			</div>
 		</div>
@@ -258,16 +259,23 @@
 
         }
         .theme-image-description-container {
-            display: flex;
             width: 100%;
             .theme-image {
-                width: 10rem;
-				height: 5.7rem;
+                width: 9.5rem;
+				height: 5.4rem;
             }
+			.theme-image-left {
+				float: left;
+				margin-right: 0.4rem;
+			}
+			.theme-image-right {
+				float: right;
+				margin-left: 0.4rem;
+			}
             .theme-description {
                 border-top: 2px #A298ED solid;
                 padding-left: 0.4rem;
-                width: 100%;
+                // width: 100%;
             }
         }
     }

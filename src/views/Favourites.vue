@@ -96,7 +96,7 @@
                                 && item.theme_order" 
                             class="theme-image-description-container"
                             v-bind:class="{'theme-description-bg-blue': item.theme_order, 'theme-description-bg-azure': !item.theme_order}">
-                        <img v-bind:src="baseImageURL + item.theme_image" class="theme-image">
+                        <img v-bind:src="baseImageURL + item.theme_image" class="theme-image theme-image-left">
                         <div class="theme-description">
                             {{ item.content }}
                         </div>
@@ -106,10 +106,10 @@
                                 && !item.theme_order" 
                             class="theme-image-description-container"
                             v-bind:class="{'theme-description-bg-blue': item.theme_order, 'theme-description-bg-azure': !item.theme_order}">
+                        <img v-bind:src="baseImageURL + item.theme_image" class="theme-image theme-image-right">
                         <div class="theme-description">
                             {{ item.content }}
                         </div>
-                        <img v-bind:src="baseImageURL + item.theme_image" class="theme-image">
                     </div>
                 </div>
             </div>
@@ -580,8 +580,6 @@
     padding-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    /* padding: 10px 10px; */
-    border-radius: 3px;
     margin-bottom: 5px;
     font-family: 'Arial';
 	font-size: 0.91rem;
@@ -639,18 +637,11 @@
     flex-wrap: wrap;
     .selects-container{
         display: flex;
-        gap: 0.6rem;
+        gap: 0.4rem;
         align-items: center;
         flex-wrap: wrap;
     }
 }
-
-/* #select_sort_by {
-    background-color: rgb(134, 134, 197,0.0);
-    color:white;
-    border:white 2px solid;
-    border-radius: 4px;
-} */
 
 .button-maximize {
     display: none;
@@ -709,16 +700,24 @@
             }
         }
         .theme-image-description-container {
-            display: flex;
+            // display: flex;
             width: 100%;
             .theme-image {
-                width: 10rem;
-                height: 5.7rem;
+                width: 9.5rem;
+				height: 5.4rem;
             }
+            .theme-image-left {
+				float: left;
+				margin-right: 0.4rem;
+			}
+			.theme-image-right {
+				float: right;
+				margin-left: 0.4rem;
+			}
             .theme-description {
                 border-top: 2px #A298ED solid;
                 padding-left: 0.4rem;
-                width: 100%;
+                // width: 100%;
             }
         }
     }

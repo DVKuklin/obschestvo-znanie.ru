@@ -4,7 +4,7 @@
 			{{ name ? name : placeHolder }}
 			<img src="/myfiles/button_drop_down.svg" class="button_drop_down">
 		</div>
-		<div v-if="isOpened" class="options-container" :style="{width: (width + 0.8) + 'rem'}">
+		<div v-if="isOpened" class="options-container" :style="{width: (width + 0.4) + 'rem'}">
 			<div v-for="(option, i) in options" :key="i" @click="change(option.value)" class="item">
 				{{ option.name }}
 			</div>
@@ -68,7 +68,7 @@
 		cursor:pointer;	
 	}
 	.selected {
-		padding: 0.2rem 0.4rem;
+		padding: 0.1rem 0.2rem;
 		background-color: rgba(96,93,207,0.46);
 		display: flex;
 		justify-content: space-between;
@@ -76,7 +76,7 @@
 		width: 10rem;
 	}
 	.options-container {
-		padding: 0 0 0.2rem;
+		padding: 0 0 0.1rem;
 		display:flex;
 		flex-direction: column;
 		position: absolute;
@@ -84,7 +84,7 @@
 		overflow:hidden;
 		background-color: rgba(96,93,207,1);
 		width: 10.8rem;
-		top: 1.78rem;
+		top: 1.55rem;
 	}
 	.button_drop_down {
         width: 0.8rem;
@@ -92,7 +92,7 @@
 		transform: rotate(90deg);
 	}
 	.item {
-		padding: 0 0.4rem;
+		padding: 0 0.2rem;
 	}
 	.item:hover {
 		background-color: red;
