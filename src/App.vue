@@ -2,7 +2,7 @@
 <div id="conForAll">
     <div>
 		<Header v-bind:isAuthenticated="isAuthenticated"></Header>
-		<BreadCrumbs v-if="isTheme"></BreadCrumbs>
+		<BreadCrumbs v-if="isTheme" position="top"></BreadCrumbs>
 			<main>
 				<div id="conForContent">
 					<RouterView 
@@ -15,7 +15,7 @@
 
 
 	<div>
-		<BreadCrumbs v-if="isTheme"></BreadCrumbs>
+		<BreadCrumbs v-if="isTheme" position="bottom"></BreadCrumbs>
 		<Footer></Footer>
 	</div>
 </div>	
@@ -31,7 +31,7 @@ import {baseUrl} from './services/config.js';
 
 export default {
 	components: {
-		Header, Footer, BreadCrumbs
+		Header, Footer, BreadCrumbs,
 	},
 	data() {
 		return {
@@ -104,13 +104,5 @@ export default {
 	flex-direction:column;
 	justify-content: space-between;
 	padding:0 10px;
-}
-
-#conForContent {
-    /* padding:10px; */
-}
-
-main {
-
 }
 </style>

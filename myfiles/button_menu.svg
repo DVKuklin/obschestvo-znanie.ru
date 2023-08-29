@@ -1,5 +1,24 @@
-<svg width="600" height="600" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M56.5 107H543" stroke="white" stroke-width="97" stroke-linecap="round"/>
-<path d="M56 300.5H542.5" stroke="white" stroke-width="97" stroke-linecap="round"/>
-<path d="M57 493.5H543.5" stroke="white" stroke-width="97" stroke-linecap="round"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2021 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="42.0584mm" height="33.5579mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 16.49 13.16"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil1 {fill:#FEFEFE}
+    .fil0 {fill:#FEFEFE}
+   ]]>
+  </style>
+ </defs>
+ <g id="Слой_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <polygon class="fil0" points="-0,11.04 16.49,11.04 16.49,13.16 -0,13.16 "/>
+  <g id="_2246316845920">
+   <path class="fil1" d="M-0 5.52c5.5,0 10.99,0 16.49,0 0,0.71 0,1.41 0,2.12 -5.5,0 -10.99,0 -16.49,0 0,-0.71 0,-1.41 0,-2.12z"/>
+  </g>
+  <polygon class="fil0" points="-0,0 16.49,0 16.49,2.12 -0,2.12 "/>
+ </g>
 </svg>
