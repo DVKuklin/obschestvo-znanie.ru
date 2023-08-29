@@ -168,7 +168,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
     .button-menu-containter {
         position: relative;
     }
