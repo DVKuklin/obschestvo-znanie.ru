@@ -1,26 +1,52 @@
 <template>
     <div v-if="status == 'loading'"><span>Загрузка данных</span></div>
 
-    <div class="img-heading" v-if="image">
-        <img class="main-img" :src="image" v-if="image">
-        <img class="emoji-img" :src="emoji" v-if="emoji">
-    </div>
+    <div v-if="status == 'success'">
+        <div class="emoji-heading-container">
+            <img class="emoji-img" :src="emoji" v-if="emoji">
+            <h1 class="header_1">
+                {{theme}}
+            </h1>
+        </div>
+        <div class="buttons-description-container">
+            <div class="buttons-container">
+                <img src="/myfiles/star.svg" v-if="theme_isFavourite" class="theme_favorite"
+                @click="setThemeToFavorites(theme_id)">
+                <img src="/myfiles/empty_star.svg" v-if="!theme_isFavourite" class="theme_favorite"
+                @click="setThemeToFavorites(theme_id)">
+            </div>
+            <div class="description-container">
+                <div class="description">
+                    {{ description }}
+                </div>
+            </div>
+        </div>
 
-    <div v-if="status == 'success'" class="conForThem">
+        <div class="heading-image-fon-container">
 
-        <h1 align="center" class="header_1">
-            {{theme}}
-            <img src="/myfiles/favorite.png" v-if="theme_isFavourite" class="theme_favorite"
-            @click="setThemeToFavorites(theme_id)">
-            <img src="/myfiles/not_favorite.png" v-if="!theme_isFavourite" class="theme_favorite"
-            @click="setThemeToFavorites(theme_id)">
-        </h1>
-        <div v-for="(item, i) in paragraphs" :key="i"  class="paragraph" :id = "'paragraph_'+item.id">
-            <div class="content" v-html="item.content"></div>
-            <img src="/myfiles/favorite.png" v-if="item.isInFavorites" class="favorite"
-            @click="setParagraphToFavorites(item.id,i)">
-            <img src="/myfiles/not_favorite.png" v-if="!item.isInFavorites" class="favorite"
-            @click="setParagraphToFavorites(item.id,i)">
+        </div>
+        <div class="heading-image-container">
+            <img class="heading-image" :src="image">
+        </div>
+        <div class="heading-image-fon-fade"></div>
+        <div class="heading-image-bottom-line"></div>
+
+        <div class="navigation-buttons-container">
+            <NavigationButtonsInTheme  :params="navigation_params"/>
+        </div>
+
+        <div class="conForThem">
+            <div v-for="(item, i) in paragraphs" :key="i"  class="paragraph" :id = "'paragraph_'+item.id">
+                <div class="content" v-html="item.content"></div>
+                <img src="/myfiles/favorite.png" v-if="item.isInFavorites" class="favorite"
+                @click="setParagraphToFavorites(item.id,i)">
+                <img src="/myfiles/not_favorite.png" v-if="!item.isInFavorites" class="favorite"
+                @click="setParagraphToFavorites(item.id,i)">
+            </div>
+        </div>
+        
+        <div class="navigation-buttons-container">
+            <NavigationButtonsInTheme :params="navigation_params"/>
         </div>
     </div>
 
@@ -32,6 +58,7 @@
 
 <script>
     import StatusMessage from '../components/StatusMessage.vue';
+    import NavigationButtonsInTheme from '../components/NavigationButtonsInTheme.vue';
     import axios from 'axios';
     import {baseUrl, baseUrlImages} from '../services/config.js';
     import {changeBloquoteToSummary, alignMarker} from '../services/methods.js';
@@ -40,7 +67,7 @@
     import { getParagraphsAndThemeByUrl } from '../services/methods.js';
     export default {
         name: 'Theme',
-        components: {StatusMessage},
+        components: {StatusMessage, NavigationButtonsInTheme},
         data() {
             return {
                 paragraphs: [],
@@ -50,11 +77,22 @@
                 section:'',
                 image:null,
                 emoji:null,
-                status: 'loading'
+                description: '',
+                status: 'loading',
+                navigation_params: {
+                    left_src: null,
+                    left_theme_name: null,
+                    right_src: 'null',
+                    right_theme_name: 'null'
+                },
             }
         },
         async created() {
-            axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
+            this.getData();
+        },
+        methods: {
+            getData() {
+                axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
 
             let str = this.$route.path.slice(1,this.$route.path.length);
             let urls = str.split("/");
@@ -76,7 +114,9 @@
                         this.status='success';
                         if (response.data.image) this.image=baseUrlImages+response.data.image;
                         if (response.data.emoji) this.emoji=baseUrlImages+response.data.emoji;
-
+                        this.description = response.data.description;
+                        this.navigation_params = response.data.navigation_params;
+                        console.log(this.navigation_params);
                     } else if (response.data.status == 'notAllowed') {
                         this.status='notAllowed';
                     } else if (response.data.status == 'notFound') {
@@ -89,8 +129,7 @@
                     }
                     console.log(error.response);
                 });
-        },
-        methods: {
+            },
             setParagraphToFavorites(id,i) {
                 axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
 
@@ -172,7 +211,6 @@
                 }
             }
         },
-
         updated() {
             //Выравниваем маркеры
             alignMarker();
@@ -189,21 +227,17 @@
                     el.scrollIntoView({'behavior':'smooth'});
                 }
             }  
+        },
+        watch: {
+            $route (to, from){
+                this.getData();
+            }
         }
-
     }
 
 </script>
 
-<style scoped>
-    .header_1 {
-        font-family: 'Open Sans', sans-serif;
-        font-size: 1.4rem;
-    }
-    .theme_favorite {
-        width:1rem;
-        cursor:pointer;
-    }
+<style lang="less" scoped>
     .conForThem {
         background-color: white;
         color: black;
@@ -240,11 +274,103 @@
         display: block;
     }
 
-    .emoji-img {
-        position:absolute;
-        width: 5rem;
-        bottom: -2.5rem;
-        left: 2rem;
+    .emoji-heading-container{
+        height: 3.75rem;
+        margin-bottom: 0.4rem;
+        .emoji-img {
+            width: 3.75rem;
+            height: 3.75rem;
+            float: left;
+            margin-right: 0.4rem;
+        }
+        .header_1 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.4rem;
+            margin: 0;
+            max-width: 800px; 
+        }
+    }
+    .buttons-description-container {
+        height: 16.6875rem;
+        @media screen and (max-width: 600px) {
+            height: 16.4rem;
+        }
+        @media screen and (max-width: 400px) {
+            height: 16.2rem;
+        }
+        @media screen and (max-width: 278px) {
+            height: 15.5rem;
+        }
+        display: flex;
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
+            background-color: rgba(96,93,207,0.46);
+            height: 100%;
+            .theme_favorite {
+                width:1.875rem;
+                cursor:pointer;
+            }
+        }
+        .description-container {
+            align-self: end;
+            margin-left: 1.875rem;
+            max-width: 760px;
+            min-height: 7.8rem;
+            display: flex;
+            .description {
+                vertical-align: text-top;
+                padding-left: 0.4rem;
+                border-left: white solid 2px;
+            }
+        }
+    }
+    .navigation-buttons-container {
+        margin: 1rem 0;
+    }
+    .heading-image-fon-container {
+        position: absolute;
+        top:0;
+        left: 0;
+        height: 30rem;
+        z-index: -4;
+        width: 100%;
+        background-image: url('/myfiles/heading-image-background_mobile.jpg');
+        background-position: center;
+        background-size: cover;
+    }
+
+    .heading-image-container {
+        position: absolute;
+        top:0;
+        left: 0;
+        height: 30rem;
+        width: 100%;
+        z-index: -3;
+        display: flex;
+        justify-content: center;
+        .heading-image {
+            height: 100%;
+        }
+    }
+    .heading-image-fon-fade {
+        position: absolute;
+        top:0;
+        left: 0;
+        height: 30rem;
+        width: 100%;
+        background-color: rgba(0,0,0,0.65);
+        z-index: -2;
+    }
+    .heading-image-bottom-line {
+        position: absolute;
+        top:0;
+        left: 0;
+        height: 29.8rem;
+        width: 100%;
+        border-bottom: 2px white solid;
+        z-index: -1;
     }
 
 </style>
