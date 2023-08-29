@@ -106,7 +106,7 @@
                 .then(response => { 
                     if (response.data.status == 'notAuth' || response.data.status == 'notAuth') {
                         this.status='notAuth';
-                    } else if (response.data.status == 'success') {
+                    } else if (response.data.status == 'success') {console.log(response.data);
                         this.paragraphs = response.data.paragraphs;
                         this.theme = response.data.theme;
                         this.theme_isFavourite = response.data.theme_isFavourite;
@@ -116,7 +116,9 @@
                         if (response.data.emoji) this.emoji=baseUrlImages+response.data.emoji;
                         this.description = response.data.description;
                         this.navigation_params = response.data.navigation_params;
-                        console.log(this.navigation_params);
+                        this.$store.commit('appState/setCurrentThemeName',response.data.theme);
+                        this.$store.commit('appState/setCurrentSectionUrl','/'+data.section_url);
+                        this.$store.commit('appState/setCurrentSectionName',response.data.section);
                     } else if (response.data.status == 'notAllowed') {
                         this.status='notAllowed';
                     } else if (response.data.status == 'notFound') {
@@ -287,7 +289,9 @@
             font-family: 'Open Sans', sans-serif;
             font-size: 1.4rem;
             margin: 0;
-            max-width: 800px; 
+            max-width: 800px;
+            overflow-y: hidden;
+            height: 3.75rem;
         }
     }
     .buttons-description-container {
