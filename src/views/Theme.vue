@@ -1,7 +1,7 @@
 <template>
     <div v-if="status == 'loading'"><span>Загрузка данных</span></div>
 
-    <div v-if="status == 'success'">
+    <div v-if="status == 'success' && $store.getters['appState/getIsAuthenticated']">
         <div class="emoji-heading-container">
             <img class="emoji-img" :src="emoji" v-if="emoji">
             <h1 class="header_1">
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <StatusMessage v-if="status == 'notAuth'" v-bind:status="status"></StatusMessage>
+    <StatusMessage v-if="status == 'notAuth' || !$store.getters['appState/getIsAuthenticated']" v-bind:status="'notAuth'"></StatusMessage>
     <StatusMessage v-if="status == 'notAllowed'" v-bind:status="status"></StatusMessage>
     <StatusMessage v-if="status == 'notFound'" v-bind:status="status"></StatusMessage>
 
@@ -354,6 +354,7 @@
         z-index: -3;
         display: flex;
         justify-content: center;
+        overflow: hidden;
         .heading-image {
             height: 100%;
         }
