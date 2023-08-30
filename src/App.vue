@@ -40,14 +40,14 @@ export default {
 		};
 	},
 	methods: {
-		//После авторизации показать пункт меню избранное
-		authenticate() {
-			this.isAuthenticated = true;
-		},
-		//После разлогинивания убрать пункт меню избранное
-		notAuthenticate() {
-			this.isAuthenticated = false;
-		}
+		// //После авторизации показать пункт меню избранное
+		// authenticate() {
+		// 	this.isAuthenticated = true;
+		// },
+		// //После разлогинивания убрать пункт меню избранное
+		// notAuthenticate() {
+		// 	this.isAuthenticated = false;
+		// }
 	},
 	created() {
 		//Определяем является ли пользователеь авторизованным, что бы показать/не показать пунк избранное
@@ -57,13 +57,13 @@ export default {
             .get(baseUrl+'/api/is_authenticated')
             .then(response => { 
                 if (response.data.status=='success') {
-                    this.isAuthenticated = true;
+                    this.$store.commit('appState/setIsAuthenticated',true);
                 }
                 // console.log(response.data);
             })
             .catch(error => {
                 if (error.response.status === 401) {
-                    console.log('notAuth')
+                    this.$store.commit('appState/setIsAuthenticated',false);
                 }
                 // console.log(error.response);
             });

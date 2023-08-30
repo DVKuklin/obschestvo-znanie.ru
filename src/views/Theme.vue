@@ -1,7 +1,7 @@
 <template>
     <div v-if="status == 'loading'"><span>Загрузка данных</span></div>
 
-    <div v-if="status == 'success'">
+    <div v-if="status == 'success' && $store.getters['appState/getIsAuthenticated']">
         <div class="emoji-heading-container">
             <img class="emoji-img" :src="emoji" v-if="emoji">
             <h1 class="header_1">
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <StatusMessage v-if="status == 'notAuth'" v-bind:status="status"></StatusMessage>
+    <StatusMessage v-if="status == 'notAuth' || !$store.getters['appState/getIsAuthenticated']" v-bind:status="'notAuth'"></StatusMessage>
     <StatusMessage v-if="status == 'notAllowed'" v-bind:status="status"></StatusMessage>
     <StatusMessage v-if="status == 'notFound'" v-bind:status="status"></StatusMessage>
 
@@ -106,7 +106,7 @@
                 .then(response => { 
                     if (response.data.status == 'notAuth' || response.data.status == 'notAuth') {
                         this.status='notAuth';
-                    } else if (response.data.status == 'success') {
+                    } else if (response.data.status == 'success') {console.log(response.data);
                         this.paragraphs = response.data.paragraphs;
                         this.theme = response.data.theme;
                         this.theme_isFavourite = response.data.theme_isFavourite;
@@ -116,7 +116,9 @@
                         if (response.data.emoji) this.emoji=baseUrlImages+response.data.emoji;
                         this.description = response.data.description;
                         this.navigation_params = response.data.navigation_params;
-                        console.log(this.navigation_params);
+                        this.$store.commit('appState/setCurrentThemeName',response.data.theme);
+                        this.$store.commit('appState/setCurrentSectionUrl','/'+data.section_url);
+                        this.$store.commit('appState/setCurrentSectionName',response.data.section);
                     } else if (response.data.status == 'notAllowed') {
                         this.status='notAllowed';
                     } else if (response.data.status == 'notFound') {
@@ -287,7 +289,9 @@
             font-family: 'Open Sans', sans-serif;
             font-size: 1.4rem;
             margin: 0;
-            max-width: 800px; 
+            max-width: 800px;
+            overflow-y: hidden;
+            height: 3.75rem;
         }
     }
     .buttons-description-container {
@@ -350,6 +354,7 @@
         z-index: -3;
         display: flex;
         justify-content: center;
+        overflow: hidden;
         .heading-image {
             height: 100%;
         }
