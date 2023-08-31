@@ -244,7 +244,6 @@
         background-color: white;
         color: black;
         padding: 10px;
-        padding-top: 2.5rem;
         margin-bottom: 5px;
         border-bottom-right-radius: 3px;
         border-bottom-left-radius: 3px;
