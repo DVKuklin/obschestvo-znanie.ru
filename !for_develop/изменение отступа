@@ -6,7 +6,7 @@ css_for_parahraphs.css
 
 .marker {
     position: absolute;
-    left: 0.1rem;
+    left: 0.02rem;
 
 }
 
