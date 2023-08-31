@@ -30,3 +30,7 @@ backend public/admin_assets/js/paragraphs-edit.js
 
   в paragraphs
   <p class="with_marker" style="margin-left:1.25rem;">
+
+
+на бэке на сервере команда 
+/usr/bin/php74 artisan temp:edit_indent_in_paragraphs
