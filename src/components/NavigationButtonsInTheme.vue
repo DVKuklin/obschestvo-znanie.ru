@@ -4,7 +4,7 @@
 		<div class="button-container"
 			 v-if="params.left_src"
 			 id = "navigationInTheme_button_container_left">
-			<RouterLink :to="params.left_src" class="router-link">
+			<RouterLink :to="params.left_src" class="router-link" @click="srollToTop()">
 				<img :src="button_left_src"
 				@mouseover="button_left_src = '/myfiles/theme_navigation_buttons/button_left_hover.svg'"
 				@mouseleave="button_left_src = '/myfiles/theme_navigation_buttons/button_left.svg'"
@@ -13,7 +13,7 @@
 				class="button left-button">
 			</RouterLink>
 			<div class="theme-name">
-				<RouterLink :to="params.left_src">{{ params.left_theme_name }}</RouterLink>
+				<RouterLink :to="params.left_src" @click="srollToTop()">{{ params.left_theme_name }}</RouterLink>
 			</div>
 			<div v-if="threePointsLeftShow">
 				...
@@ -23,12 +23,12 @@
 			 v-if="params.right_src"
 			 id = "navigationInTheme_button_container_right">
 			<div class="theme-name">
-				<RouterLink :to="params.right_src">{{ params.right_theme_name }}</RouterLink>
+				<RouterLink :to="params.right_src" @click="srollToTop()">{{ params.right_theme_name }}</RouterLink>
 			</div>
 			<div v-if="threePointsRightShow">
 				...
 			</div>
-			<RouterLink :to="params.right_src" class="router-link">
+			<RouterLink :to="params.right_src" class="router-link" @click="srollToTop()">
 				<img :src="button_right_src"
 				@mouseover="button_right_src = '/myfiles/theme_navigation_buttons/button_right_hover.svg'"
 				@mouseleave="button_right_src = '/myfiles/theme_navigation_buttons/button_right.svg'"
@@ -91,6 +91,9 @@
 						this.threePointsRightShow = false;
 					}
 				}
+			},
+			srollToTop() {
+				window.scrollTo({top: 0,behavior: 'smooth'})
 			}
 		},
 		updated() {
