@@ -77,9 +77,10 @@
 			return {
 				themes: [],
 				section: '',
-				sectionURL: this.$route.path,
 				baseImageURL: baseImageURL,
 				hiddenAllParagraphs: false,
+				themesHidden: [],
+				sectionUrl: '',
 			}
 		},
 		created(){
@@ -88,35 +89,46 @@
 		methods:{
 			async getPagesBySectionUrl(){
 				axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
-				let url = this.$route.path.slice(1,this.$route.path.length);
+				this.sectionUrl = this.$route.path.slice(1,this.$route.path.length);
 
 				axios
-                    .post(baseUrl+'/api/get_themes_and_section_by_section_url',{section_url: url})
+                    .post(baseUrl+'/api/get_themes_and_section_by_section_url',{section_url: this.sectionUrl})
                     .then(response => { 
 						this.themes = response.data.themes;
 						let b = true;
+						this.themesHidden = [];
+						this.themesHidden = JSON.parse(localStorage.getItem(this.sectionUrl+'_themesHidden'));
+						if (this.themesHidden == null) {
+							this.themesHidden = [];
+						}
+
 						for (let i = 0; i<this.themes.length; i++) {
 							this.themes[i].theme_order = b;
 							b = !b;
-							this.themes[i].hidden = true;
+							if (this.themesHidden[i] === true || this.themesHidden[i] === false) {
+								this.themes[i].hidden = this.themesHidden[i]
+							} else {
+								this.themes[i].hidden = true;
+							}
 						}
 						this.section = response.data.section;
                     })
                     .catch(error => {
                         console.log(error.response);
                     });
-
-				// let data = await getThemesAndSectionBySectionUrl(url);
-
 			},
 			dropDownAll() {
 				this.hiddenAllParagraphs = !this.hiddenAllParagraphs;
 				for (let i=0;i<this.themes.length; i++) {
 					this.themes[i].hidden = !this.hiddenAllParagraphs;
+					this.themesHidden[i] = this.themes[i].hidden;
 				}
+				localStorage.setItem(this.sectionUrl+'_themesHidden',JSON.stringify(this.themesHidden));
 			},
 			themeDropDownClick(i) {
 				this.themes[i].hidden = !this.themes[i].hidden;
+				this.themesHidden[i] = this.themes[i].hidden;
+				localStorage.setItem(this.sectionUrl+'_themesHidden',JSON.stringify(this.themesHidden));
 			},
 			addToFavourites(id,i) {
                 axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');

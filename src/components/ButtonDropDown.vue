@@ -28,6 +28,9 @@ export default {
         } else {
             this.aditionClass = this.className;
         }
+        if (this.pressed === true || this.pressed === false) {
+            this.isPressed = this.pressed;
+        }
     },
     methods: {
         handleClick() {
