@@ -166,7 +166,7 @@
                 ],
                 filter_type_options: [
                     {value: 'all', name:'всё'},
-                    {value: 'paragraph',  name:'параграфы'},
+                    {value: 'paragraph',  name:'абзацы'},
                     {value: 'theme', name:'темы'}
                 ],
                 all_hidden: true,
