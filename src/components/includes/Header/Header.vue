@@ -37,5 +37,6 @@ header {
 	width:100%;
 	margin-top:10px;
 	align-items: center;
+	margin-bottom: 2rem;
 }
 </style>

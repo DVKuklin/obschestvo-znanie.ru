@@ -294,15 +294,15 @@
         }
     }
     .buttons-description-container {
-        height: 16.6875rem;
+        height: 15.15rem;
         @media screen and (max-width: 600px) {
-            height: 16.4rem;
+            height: 15.05rem;
         }
         @media screen and (max-width: 400px) {
-            height: 16.2rem;
+            height: 14.85rem;
         }
         @media screen and (max-width: 278px) {
-            height: 15.5rem;
+            height: 14.2rem;
         }
         display: flex;
         .buttons-container {
