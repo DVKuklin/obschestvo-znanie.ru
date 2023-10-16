@@ -38,6 +38,20 @@ html, #app{
 
 
 
+    /* Настройка картинок эмодзи в тексте */
+    .img-emoji {
+        position: relative;
+        width: 1.2rem;
+        display:inline-block;
+        background-color: chocolate;
+    }   
 
+    .img-emoji img{
+        position: absolute;
+        top: -0.93rem;
+		left: 0;
+        width:1.2rem;
+        height:1.2rem;
+    }
 
 

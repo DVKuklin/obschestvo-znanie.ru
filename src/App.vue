@@ -2,7 +2,7 @@
 <div id="conForAll">
     <div>
 		<Header v-bind:isAuthenticated="isAuthenticated"></Header>
-		<BreadCrumbs v-if="isTheme"></BreadCrumbs>
+		<BreadCrumbs v-if="isTheme" position="top"></BreadCrumbs>
 			<main>
 				<div id="conForContent">
 					<RouterView 
@@ -15,7 +15,7 @@
 
 
 	<div>
-		<BreadCrumbs v-if="isTheme"></BreadCrumbs>
+		<BreadCrumbs v-if="isTheme" position="bottom"></BreadCrumbs>
 		<Footer></Footer>
 	</div>
 </div>	
@@ -31,7 +31,7 @@ import {baseUrl} from './services/config.js';
 
 export default {
 	components: {
-		Header, Footer, BreadCrumbs
+		Header, Footer, BreadCrumbs,
 	},
 	data() {
 		return {
@@ -40,14 +40,14 @@ export default {
 		};
 	},
 	methods: {
-		//После авторизации показать пункт меню избранное
-		authenticate() {
-			this.isAuthenticated = true;
-		},
-		//После разлогинивания убрать пункт меню избранное
-		notAuthenticate() {
-			this.isAuthenticated = false;
-		}
+		// //После авторизации показать пункт меню избранное
+		// authenticate() {
+		// 	this.isAuthenticated = true;
+		// },
+		// //После разлогинивания убрать пункт меню избранное
+		// notAuthenticate() {
+		// 	this.isAuthenticated = false;
+		// }
 	},
 	created() {
 		//Определяем является ли пользователеь авторизованным, что бы показать/не показать пунк избранное
@@ -57,19 +57,23 @@ export default {
             .get(baseUrl+'/api/is_authenticated')
             .then(response => { 
                 if (response.data.status=='success') {
-                    this.isAuthenticated = true;
+                    this.$store.commit('appState/setIsAuthenticated',true);
                 }
                 // console.log(response.data);
             })
             .catch(error => {
                 if (error.response.status === 401) {
-                    console.log('notAuth')
+                    this.$store.commit('appState/setIsAuthenticated',false);
                 }
                 // console.log(error.response);
             });
+		
+		let css_for_paragraphs_link = document.createElement('link');
+		css_for_paragraphs_link.setAttribute('rel',"stylesheet");
+		css_for_paragraphs_link.setAttribute('href',import.meta.env.VITE_BACKEND_URL+'/css/css_for_paragraphs.css');
+		document.querySelector('head').append(css_for_paragraphs_link);
     },
 	mounted() {
-
 	},
 	watch: {
 		$route (to, from){
@@ -100,13 +104,5 @@ export default {
 	flex-direction:column;
 	justify-content: space-between;
 	padding:0 10px;
-}
-
-#conForContent {
-    /* padding:10px; */
-}
-
-main {
-
 }
 </style>

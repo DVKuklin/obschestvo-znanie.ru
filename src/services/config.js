@@ -1,9 +1,8 @@
-export const baseUrl = 'http://api.obschestvo-znanie.ru';
-// export const baseUrl = 'https://api-obschestvo-znanie.dvkuklin.ru';
-// export const baseUrl = 'http://127.0.0.1:8000';
+export const baseUrl = import.meta.env.VITE_BACKEND_URL;
 
 export const baseUrlApi = baseUrl + '/api';
-export const baseUrlStorage = baseUrl + 'storage/';
+export const baseUrlStorage = baseUrl + '/storage/';
+export const baseImageURL = baseUrl + '/storage/';
 export const token_key = 'token';
 
 export const baseUrlImages = baseUrl + '/storage/'

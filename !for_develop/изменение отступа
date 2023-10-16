@@ -1,0 +1,36 @@
+css_for_parahraphs.css
+
+.conForThem p {
+    padding-left: 1.25rem;
+}
+
+.marker {
+    position: absolute;
+    left: 0.02rem;
+
+}
+
+.conForThem .details .summary {
+    padding-left: 1.25rem;0.8
+}
+.summary_before {
+    left: 0.1rem;????? -0.2
+}
+
+
+backend public/admin_assets/js/paragraphs-edit.js
+
+  indentBlock: {
+    offset: 1.25,  0.8
+    unit: 'rem'
+  }
+
+  поменять
+
+
+  в paragraphs
+  <p class="with_marker" style="margin-left:1.25rem;">
+
+
+на бэке на сервере команда 
+/usr/bin/php74 artisan temp:edit_indent_in_paragraphs

@@ -32,21 +32,11 @@ export default {
 <style scoped>
 
 header {
-	display:grid;
-	grid-template-columns: 370px auto;
+	display:flex;
+	justify-content: space-between;
 	width:100%;
 	margin-top:10px;
+	align-items: center;
+	margin-bottom: 2rem;
 }
-
-@media screen and (max-width:771px){
-	header {
-		grid-template-columns: 100%;
-	}
-}
-
-
-
-
-
-
 </style>

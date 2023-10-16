@@ -1,9 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Test from '../views/Test.vue'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Contacts from '../views/Contacts.vue'
-import Authorization from '../views/Authorization.vue'
 import SectionMenu from '../views/SectionMenu.vue'
 import Theme from '../views/Theme.vue'
 import NotFound from '../views/NotFound.vue'
@@ -16,9 +14,9 @@ let routes = [
     component: Home
   },
   {
-    path: '/favorites',
-    name: 'Favorites',
-    component: () => import('../views/Favorites.vue')
+    path: '/favourites',
+    name: 'Favourites',
+    component: () => import('../views/Favourites.vue')
   },
   {
     path: '/about/',
@@ -29,11 +27,6 @@ let routes = [
     path: '/contacts/',
     name: 'Contacts',
     component: Contacts
-  },
-  {
-    path: '/avt/',
-    name: 'Authorization',
-    component: Authorization
   },
 ];
 
