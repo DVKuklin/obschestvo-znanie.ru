@@ -55,10 +55,7 @@
                 let sections = res.data.map(function(item, index) {
                         return {
                             id: item.id,
-                            name: item.name,
-                            url: item.url,
-                            imgOut: baseUrlImages+item.image,
-                            imgOver: baseUrlImages+item.imagehover,
+                            name: item.name,scriptages+item.imagehover,
                             img: baseUrlImages+item.image,
                         };
                 });
@@ -102,6 +99,12 @@
 
 .icRazd:hover {
 	background-color:rgb(234,239,255);
+    transform: scale(1.02);
+    box-shadow: 0 0 20px white;
+}
+
+.icRazd:active {
+    transform: scale(0.8);
 }
 
 .icRazd .insideCell {

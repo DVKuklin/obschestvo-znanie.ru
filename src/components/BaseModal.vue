@@ -60,6 +60,7 @@
 		position: relative;
 		border: solid white 1px;
 		width: 214px;
+		box-shadow: 0 0 20px white;
 		.button-close {
 			position: absolute;
 			top: 0.4rem;
