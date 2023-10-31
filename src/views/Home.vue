@@ -55,7 +55,10 @@
                 let sections = res.data.map(function(item, index) {
                         return {
                             id: item.id,
-                            name: item.name,scriptages+item.imagehover,
+                            name: item.name,
+                            url: item.url,
+                            imgOut: baseUrlImages+item.image,
+                            imgOver: baseUrlImages+item.imagehover,
                             img: baseUrlImages+item.image,
                         };
                 });
