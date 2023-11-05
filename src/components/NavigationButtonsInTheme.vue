@@ -63,8 +63,25 @@
 			window.addEventListener('resize', () => {
 				this.insertThreePoints();
 			});
+
+			document.addEventListener('keyup', this.goToNextPage,);
+		},
+		unmounted() {
+			document.removeEventListener('keyup',this.goToNextPage);
 		},
 		methods:{
+			goToNextPage(event) {
+				if (event.code == "ArrowRight") {
+					if (this.params.right_src !== null) {
+						this.$router.push(this.params.right_src);
+					}
+				}
+				if (event.code == "ArrowLeft") {
+					if (this.params.left_src !== null) {
+						this.$router.push(this.params.left_src);
+					}
+				}
+			},
 			insertThreePoints() {
 				let rem = window.getComputedStyle(document.body).getPropertyValue('font-size').match(/\d+/)[0];
 
