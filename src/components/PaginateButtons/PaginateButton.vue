@@ -6,7 +6,7 @@
     <RouterLink v-else :to="{ name: 'Favourites', query: newQuery }">
         <button class="button"
             v-bind:class="{ active:isActive }">
-            <b><span v-html="content"></span></b>
+            <span v-html="content"></span>
         </button>
     </RouterLink>
 </template>
@@ -50,15 +50,16 @@ export default {
 <style scoped>
     .button {
         font-size: 0.8rem;
-        border: solid white 2px;
+        border: solid white 1px;
         margin: 0 0.3rem;
         background-color: rgb(134, 166, 166,0.0);
         color:white;
         cursor:pointer;
-       
+        font-family: 'Open Sans', sans-serif;
     }
 
     .active {
-        box-shadow: 0px 0px 15px rgb(255, 255, 255);
+        box-shadow: 0px 0px 10px rgb(255, 255, 255);
+        background-color:rgb(0,0,0, 0.45);
     }
 </style>
