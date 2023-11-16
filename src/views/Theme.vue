@@ -53,12 +53,13 @@
     <StatusMessage v-if="status == 'notAuth' || !$store.getters['appState/getIsAuthenticated']" v-bind:status="'notAuth'"></StatusMessage>
     <StatusMessage v-if="status == 'notAllowed'" v-bind:status="status"></StatusMessage>
     <StatusMessage v-if="status == 'notFound'" v-bind:status="status"></StatusMessage>
-
+    <ButtonScrollTop></ButtonScrollTop>
 </template>
 
 <script>
     import StatusMessage from '../components/StatusMessage.vue';
     import NavigationButtonsInTheme from '../components/NavigationButtonsInTheme.vue';
+    import ButtonScrollTop from '../components/ButtonScrollTop.vue';
     import axios from 'axios';
     import {baseUrl, baseUrlImages} from '../services/config.js';
     import {changeBloquoteToSummary, alignMarker} from '../services/methods.js';
@@ -67,7 +68,7 @@
     import { getParagraphsAndThemeByUrl } from '../services/methods.js';
     export default {
         name: 'Theme',
-        components: {StatusMessage, NavigationButtonsInTheme},
+        components: {StatusMessage, NavigationButtonsInTheme, ButtonScrollTop},
         data() {
             return {
                 paragraphs: [],
