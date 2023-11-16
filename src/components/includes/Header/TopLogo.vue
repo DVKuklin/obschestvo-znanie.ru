@@ -2,7 +2,7 @@
     <div class="topLog">
         <RouterLink to="/">
             <nobr class="topLogo-container">
-                <img src="/myfiles/logoWhite.png"> 
+                <img src="/myfiles/logo.svg"> 
                 <div class = "logURL">
                     <b>ОБЩЕСТВОЗНАНИЕ</b>
                     <br>

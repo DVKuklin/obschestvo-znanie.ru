@@ -102,6 +102,12 @@
 
 .icRazd:hover {
 	background-color:rgb(234,239,255);
+    transform: scale(1.04);
+    box-shadow: 0 0 20px white;
+}
+
+.icRazd:active {
+    transform: scale(0.96);
 }
 
 .icRazd .insideCell {
@@ -109,7 +115,7 @@
 }
 
 .icRazd .insideCell img{
-    width: 4.125rem;
+    height: 4.125rem;
 }
 
 .icRazd a {
