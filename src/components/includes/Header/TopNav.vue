@@ -9,6 +9,10 @@
             <RouterLink v-if="$store.getters['appState/getIsAuthenticated']" to="/favourites" @click="isOpened = !isOpened">
                 <img src="/myfiles/star.svg" class="menu-button">
             </RouterLink>
+            <RouterLink v-for="(item, i) in $store.getters['appState/getAdditionalPages']" :key="i" :to="'/' + item.url">
+                <img v-if="item.icon" :src="baseUrlImages + item.icon" class="menu-button">
+                <img v-else="item.icon" src="/myfiles/star.svg" class="menu-button">
+            </RouterLink>
         </div>
     </div>
 
@@ -54,7 +58,7 @@
 </template>
 
 <script>
-import {baseUrl} from '../../../services/config.js';
+import {baseUrl, baseUrlImages} from '../../../services/config.js';
 import BaseModal from '../../../components/BaseModal.vue';
 import axios from 'axios';
 
@@ -71,6 +75,7 @@ export default {
             placeholder_login: true,
             placeholder_password: true,
             loginMessage: '',
+            baseUrlImages: baseUrlImages,
         }
     },
     // props: ['isAuthenticated'],
