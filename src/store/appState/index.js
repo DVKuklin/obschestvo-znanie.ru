@@ -3,6 +3,7 @@ const initialState = {
     currentSectionUrl: '',
     currentSectionName: '',
     isAuthenticated: false,
+    additionalPages: [],
 };
 
 const appState = { 
@@ -21,6 +22,9 @@ const appState = {
         setIsAuthenticated(state, value) {
             state.isAuthenticated = value;
         },
+        setAdditionalPages(state, value) {
+            state.additionalPages = value;
+        }
     },
     // actions: { 
     //     increaseCount({ commit }) {
@@ -32,6 +36,7 @@ const appState = {
         getCurrentSectionUrl: (state) => state.currentSectionUrl,
         getCurrentSectionName: (state) => state.currentSectionName,
         getIsAuthenticated: (state) => state.isAuthenticated,
+        getAdditionalPages: (state) => state.additionalPages,
     } 
 };
 

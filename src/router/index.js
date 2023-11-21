@@ -4,8 +4,10 @@ import About from '../views/About.vue'
 import Contacts from '../views/Contacts.vue'
 import SectionMenu from '../views/SectionMenu.vue'
 import Theme from '../views/Theme.vue'
+import AdditionalPage from '../views/AdditionalPage.vue'
 import NotFound from '../views/NotFound.vue'
-import { getSections, getThemesAndSectionBySectionUrl } from '../services/methods.js';
+import { getSections, getThemesAndSectionBySectionUrl, getAdditionalPagesUrl } from '../services/methods.js';
+import store from '../store';
 
 let routes = [
   {
@@ -65,6 +67,16 @@ async function addRoutes() {
       })
     }
   }
+
+  //Роуты для дополнительных страниц
+  let additionalPages = await getAdditionalPagesUrl();
+  store.commit('appState/setAdditionalPages',additionalPages.data);
+  additionalPages.data.forEach(element => {
+    routes.push({
+      path: '/'+element.url,
+      component: AdditionalPage,
+    })
+  });
 
   for (let i=0;i<routes.length;i++) {
     router.addRoute(routes[i]);

@@ -107,7 +107,7 @@
                 .then(response => { 
                     if (response.data.status == 'notAuth' || response.data.status == 'notAuth') {
                         this.status='notAuth';
-                    } else if (response.data.status == 'success') {console.log(response.data);
+                    } else if (response.data.status == 'success') {
                         this.paragraphs = response.data.paragraphs;
                         this.theme = response.data.theme;
                         this.theme_isFavourite = response.data.theme_isFavourite;

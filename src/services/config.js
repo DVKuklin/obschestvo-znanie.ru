@@ -14,6 +14,9 @@ const api = {
     themes_and_section: {
         get_by_section_url: baseUrlApi + "/get_themes_and_section_by_section_url",
     },
+    additional_pages: {
+        get_urls: baseUrlApi + "/get_additional_pages_urls",
+    },
     themes: {
         get_by_section_id: baseUrlApi + "/get_themes_by_section_id"
     },

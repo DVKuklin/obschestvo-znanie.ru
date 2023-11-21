@@ -63,6 +63,10 @@ export const getThemesAndSectionBySectionUrl = async function(section_url) {
     return $api.post(api.themes_and_section.get_by_section_url,data);
 }
 
+export const getAdditionalPagesUrl = async function() {
+    return $api.get(api.additional_pages.get_urls);
+}
+
 export const getParagraphsAndThemeByUrl = async function(section_url,theme_url) {
     let token = localStorage.getItem('token');
     if (token == null || token == undefined) {
