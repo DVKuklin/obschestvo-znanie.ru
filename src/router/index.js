@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About.vue'
-import Contacts from '../views/Contacts.vue'
 import SectionMenu from '../views/SectionMenu.vue'
 import Theme from '../views/Theme.vue'
 import AdditionalPage from '../views/AdditionalPage.vue'
@@ -19,16 +17,6 @@ let routes = [
     path: '/favourites',
     name: 'Favourites',
     component: () => import('../views/Favourites.vue')
-  },
-  {
-    path: '/about/',
-    name: 'About',
-    component: About
-  },
-  {
-    path: '/contacts/',
-    name: 'Contacts',
-    component: Contacts
   },
 ];
 
